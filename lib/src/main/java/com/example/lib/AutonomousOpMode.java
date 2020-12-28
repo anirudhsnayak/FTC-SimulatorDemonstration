@@ -15,13 +15,12 @@ public class AutonomousOpMode extends LinearOpMode{
         motorRightFront = hardwareMap.dcMotor.get("Motor2");
         motorLeftBack = hardwareMap.dcMotor.get("Motor3");
         motorRightBack = hardwareMap.dcMotor.get("Motor4");
-
-      while (true){
-          StrafeRight();
-          sleep(2000);
-          StopMotors();
-          sleep(2000);
-      }
+        while (true) {
+            StrafeRight();
+            sleep(2000);
+            StopMotors();
+            sleep(2000);
+        }
     }
     void SpinClockwise(){
         motorLeftFront.setPower(-200);
@@ -72,9 +71,9 @@ public class AutonomousOpMode extends LinearOpMode{
         motorRightBack.setPower(-200);
     }
     void StopMotors(){
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor1", "100.0", "0.0"}));
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor2", "100.0", "0.0"}));
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor3", "100.0", "0.0"}));
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor4", "100.0", "0.0"}));
+        motorLeftFront.setPower(0);
+        motorRightFront.setPower(0);
+        motorLeftBack.setPower(0);
+        motorRightBack.setPower(0);
     }
 }

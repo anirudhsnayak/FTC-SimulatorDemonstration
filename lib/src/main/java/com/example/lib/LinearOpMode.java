@@ -7,15 +7,17 @@ public abstract class LinearOpMode { //need to increase the functionality, beta 
 
     abstract public void runOpMode() throws InterruptedException;
 
-    static void sleep(long milliseconds){
+    static void sleep(long milliseconds) {
+        RobotServer.SendCommand(new RobotEvent(RobotAction.IDLING, new String[]{}));
         try {
-            Thread.sleep(milliseconds);
+            Thread.currentThread().sleep(milliseconds);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
+            System.out.println(ex.toString());
         }
     }
     public final void idle() {
-        Thread.yield();
+        Thread.currentThread().yield();
     }
 
 }

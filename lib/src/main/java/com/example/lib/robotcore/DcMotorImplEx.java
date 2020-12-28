@@ -37,6 +37,7 @@ package com.example.lib.robotcore;
 import com.example.lib.RobotAction;
 import com.example.lib.RobotController;
 import com.example.lib.RobotEvent;
+import com.example.lib.RobotServer;
 
 /**
  * {@link DcMotorImplEx} is a motor that supports the {@link DcMotorEx} interface in addition
@@ -53,11 +54,11 @@ public class DcMotorImplEx extends DcMotorImpl implements DcMotorEx
 
     public void setVelocity(double velocity){
         Velocity = velocity;
-        RobotController.AddEvent(RobotAction.SET_POWER, new String[]{Tag, "100000.0", String.valueOf(velocity)});
+        RobotServer.SendCommand(new RobotEvent(RobotAction.SET_POWER, new String[]{Tag, "100000.0", String.valueOf(velocity)}));
     }
     public void setVelocity(double velocity, AngleUnit angleUnit){ //need to implement the angle unit with the velocity
         Velocity = velocity;
-        RobotController.AddEvent(RobotAction.SET_POWER, new String[]{Tag, "100000.0", String.valueOf(velocity)});
+        RobotServer.SendCommand(new RobotEvent(RobotAction.SET_POWER, new String[]{Tag, "100000.0", String.valueOf(velocity)}));
    }
     public double getVelocity(){
         return Velocity;
