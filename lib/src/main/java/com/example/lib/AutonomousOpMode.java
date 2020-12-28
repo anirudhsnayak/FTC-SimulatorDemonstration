@@ -15,7 +15,7 @@ public class AutonomousOpMode extends LinearOpMode{
         motorRightFront = hardwareMap.dcMotor.get("Motor2");
         motorLeftBack = hardwareMap.dcMotor.get("Motor3");
         motorRightBack = hardwareMap.dcMotor.get("Motor4");
-        while (true) {
+        while (opModeIsActive()) {
             StrafeRight();
             sleep(2000);
             StopMotors();

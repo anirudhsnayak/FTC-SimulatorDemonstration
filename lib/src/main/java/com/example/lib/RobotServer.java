@@ -6,9 +6,6 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Time;
-import java.time.Instant;
-import java.time.LocalTime;
 
 public class RobotServer extends Thread {
     static PrintWriter out;
@@ -29,14 +26,13 @@ public class RobotServer extends Thread {
                 RobotController robotController = new RobotController();
                 robotController.start();
                 out.println("RESET");
-                connection:
                 while (true) {
                     inputLine = in.readLine();
                     if (inputLine != null) {
                         if (inputLine.equals("RESET")) {
                             System.out.println("Disconnected");
                             robotController.interrupt();
-                            break connection;
+                            break;
                         }
                     }
                 }
