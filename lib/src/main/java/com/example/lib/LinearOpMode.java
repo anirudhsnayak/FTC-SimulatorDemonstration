@@ -2,9 +2,10 @@ package com.example.lib;
 
 import java.util.concurrent.TimeUnit;
 
-public abstract class LinearOpMode { //need to increase the functionality, beta class for now
+public abstract class LinearOpMode { //TODO: MAKE THIS WORK WITH ANNOTATIONS
+    //need to increase the functionality, beta class for now
     static HardwareMap hardwareMap = new HardwareMap();
-    boolean isStarted = false;
+    boolean isStarted = true; //TODO: MAKE THIS FALSE, THEN SET ON START
     boolean stopRequested = false;
     abstract public void runOpMode() throws InterruptedException;
 
