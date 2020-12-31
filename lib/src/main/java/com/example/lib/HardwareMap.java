@@ -9,7 +9,7 @@ import com.example.lib.robotcore.Rev2mDistanceSensor;
 
 import java.util.List;
 
-@SuppressWarnings("")
+@SuppressWarnings("unchecked")
 public class HardwareMap {
     public DeviceMapping dcMotor = new DeviceMapping(); //could overload with servo, sensor, etc
     public <T> T get(Class<? extends T> classType, String tag){

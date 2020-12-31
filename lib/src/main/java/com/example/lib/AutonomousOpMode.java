@@ -2,19 +2,23 @@ package com.example.lib;
 import java.util.*;
 import com.example.lib.robotcore.*;
 
-
+@Autonomous
 public class AutonomousOpMode extends LinearOpMode{
     DcMotor motorLeftFront;
     DcMotor motorRightFront;
     DcMotor motorLeftBack;
     DcMotor motorRightBack;
-    public AutonomousOpMode(){};
+    DistanceSensor ds1;
+    DistanceSensor ds2;
     @Override
     public void runOpMode(){
         motorLeftFront = hardwareMap.dcMotor.get("Motor1");
         motorRightFront = hardwareMap.dcMotor.get("Motor2");
         motorLeftBack = hardwareMap.dcMotor.get("Motor3");
         motorRightBack = hardwareMap.dcMotor.get("Motor4");
+        ds1 = hardwareMap.get(DistanceSensor.class, "DS1");
+        ds2 = hardwareMap.get(DistanceSensor.class, "DS2");
+        //makeParallel();
         while (opModeIsActive()) {
             StrafeRight();
             sleep(2000);
@@ -39,24 +43,12 @@ public class AutonomousOpMode extends LinearOpMode{
         motorRightFront.setPower(-200);
         motorLeftBack.setPower(200);
         motorRightBack.setPower(-200);
-        /*
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor1", "100.0", "200.0"}));
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor2", "100.0", "-200.0"}));
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor3", "100.0", "-200.0"}));
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor4", "100.0", "200.0"}));
-        */
     }
     void StrafeRight(){
         motorLeftFront.setPower(-200);
         motorRightFront.setPower(200);
         motorLeftBack.setPower(-200);
         motorRightBack.setPower(200);
-        /*
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor1", "100.0", "-200.0"}));
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor2", "100.0", "200.0"}));
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor3", "100.0", "200.0"}));
-        RobotController.robotEvents.add(new RobotEvent(RobotAction.SET_POWER, new String[]{"Motor4", "100.0", "-200.0"}));
-        */
     }
     void MoveForward(float p){
         motorLeftFront.setPower(p);
@@ -75,5 +67,16 @@ public class AutonomousOpMode extends LinearOpMode{
         motorRightFront.setPower(0);
         motorLeftBack.setPower(0);
         motorRightBack.setPower(0);
+    }
+    public void makeParallel() {
+        double dis1 = ds1.getDistance(DistanceUnit.CM);
+        double dis2 = ds1.getDistance(DistanceUnit.CM);
+        while (opModeIsActive()){
+            if (dis1>dis2){
+                SpinClockwise();
+            } else {
+                SpinCounterClockwise();
+            }
+        }
     }
 }
