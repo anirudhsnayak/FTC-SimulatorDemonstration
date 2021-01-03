@@ -1,7 +1,5 @@
 package com.example.lib.robotcore;
 
-import com.example.lib.DeviceMapping;
-
 public class Rev2mDistanceSensor implements DistanceSensor {
     String Tag;
     public Rev2mDistanceSensor(String tag){

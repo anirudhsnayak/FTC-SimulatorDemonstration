@@ -1,4 +1,4 @@
-package com.example.lib;
+package com.example.lib.robotcore;
 
 import com.example.lib.robotcore.*;
 

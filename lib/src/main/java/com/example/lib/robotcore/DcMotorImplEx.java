@@ -34,10 +34,9 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.example.lib.robotcore;
 
 
-import com.example.lib.RobotAction;
-import com.example.lib.RobotController;
-import com.example.lib.RobotEvent;
-import com.example.lib.RobotServer;
+import com.example.lib.server.RobotAction;
+import com.example.lib.server.RobotEvent;
+import com.example.lib.server.RobotServer;
 
 /**
  * {@link DcMotorImplEx} is a motor that supports the {@link DcMotorEx} interface in addition

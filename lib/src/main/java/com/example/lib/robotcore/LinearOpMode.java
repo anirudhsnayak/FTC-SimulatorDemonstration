@@ -1,15 +1,17 @@
-package com.example.lib;
+package com.example.lib.robotcore;
 
-import java.util.concurrent.TimeUnit;
+import com.example.lib.server.RobotAction;
+import com.example.lib.server.RobotEvent;
+import com.example.lib.server.RobotServer;
 
 public abstract class LinearOpMode { //TODO: MAKE THIS WORK WITH ANNOTATIONS
     //need to increase the functionality, beta class for now
-    static HardwareMap hardwareMap = new HardwareMap();
+    protected static HardwareMap hardwareMap = new HardwareMap();
     boolean isStarted = true; //TODO: MAKE THIS FALSE, THEN SET ON START
     boolean stopRequested = false;
     abstract public void runOpMode() throws InterruptedException;
 
-    void sleep(long milliseconds)  {
+    protected void sleep(long milliseconds)  {
         RobotServer.SendCommand(new RobotEvent(RobotAction.IDLING, new String[]{}));
         try {
             Thread.sleep(milliseconds);
@@ -19,6 +21,7 @@ public abstract class LinearOpMode { //TODO: MAKE THIS WORK WITH ANNOTATIONS
         }
     }
     public final void idle() {
+        RobotServer.SendCommand(new RobotEvent(RobotAction.IDLING, new String[]{}));
         Thread.yield();
     }
 

@@ -1,5 +1,4 @@
 package com.example.lib;
-import java.util.*;
 import com.example.lib.robotcore.*;
 
 @Autonomous
@@ -18,6 +17,7 @@ public class AutonomousOpMode extends LinearOpMode{
         motorRightBack = hardwareMap.dcMotor.get("Motor4");
         ds1 = hardwareMap.get(DistanceSensor.class, "DS1");
         ds2 = hardwareMap.get(DistanceSensor.class, "DS2");
+
         //makeParallel();
         while (opModeIsActive()) {
             StrafeRight();
@@ -29,14 +29,14 @@ public class AutonomousOpMode extends LinearOpMode{
     void SpinClockwise(){
         motorLeftFront.setPower(-200);
         motorLeftBack.setPower(-200);
-        motorRightFront.setPower(200);
-        motorRightBack.setPower(200);
+        motorRightFront.setPower(-200);
+        motorRightBack.setPower(-200);
     }
     void SpinCounterClockwise(){
         motorLeftFront.setPower(200);
         motorLeftBack.setPower(200);
-        motorRightFront.setPower(-200);
-        motorRightBack.setPower(-200);
+        motorRightFront.setPower(200);
+        motorRightBack.setPower(200);
     }
     void StrafeLeft(){
         motorLeftFront.setPower(200);
@@ -69,9 +69,15 @@ public class AutonomousOpMode extends LinearOpMode{
         motorRightBack.setPower(0);
     }
     public void makeParallel() {
-        double dis1 = ds1.getDistance(DistanceUnit.CM);
-        double dis2 = ds1.getDistance(DistanceUnit.CM);
         while (opModeIsActive()){
+            double dis1 = ds1.getDistance(DistanceUnit.CM);
+            double dis2 = ds2.getDistance(DistanceUnit.CM);
+            System.out.println(ds1.getDistance(DistanceUnit.CM));
+            System.out.println(ds2.getDistance(DistanceUnit.CM));
+            if (Math.abs(dis1-dis2)<5){
+                StopMotors();
+                break;
+            }
             if (dis1>dis2){
                 SpinClockwise();
             } else {

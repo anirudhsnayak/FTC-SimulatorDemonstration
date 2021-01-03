@@ -1,13 +1,10 @@
-package com.example.lib;
-
-import androidx.annotation.Nullable;
+package com.example.lib.robotcore;
 
 import com.example.lib.robotcore.DcMotor;
 import com.example.lib.robotcore.DcMotorImpl;
+import com.example.lib.robotcore.DeviceMapping;
 import com.example.lib.robotcore.DistanceSensor;
 import com.example.lib.robotcore.Rev2mDistanceSensor;
-
-import java.util.List;
 
 @SuppressWarnings("unchecked")
 public class HardwareMap {

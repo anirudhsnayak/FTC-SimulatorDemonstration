@@ -31,7 +31,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.example.lib.robotcore;
 
-import com.example.lib.*;
+import com.example.lib.server.RobotAction;
+import com.example.lib.server.RobotEvent;
+import com.example.lib.server.RobotServer;
 
 
 public class DcMotorImpl implements DcMotor {

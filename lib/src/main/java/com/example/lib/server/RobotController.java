@@ -1,6 +1,7 @@
-package com.example.lib;
+package com.example.lib.server;
 
 import com.example.lib.robotcore.Autonomous;
+import com.example.lib.robotcore.LinearOpMode;
 
 import org.reflections.Reflections;
 
@@ -11,10 +12,8 @@ public class RobotController extends Thread{
     public void run(){
         try {
             getLinearOpMode().runOpMode();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | IllegalAccessException | InstantiationException e) {
             System.out.println(e.toString());
-        } catch (IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
         }
     }
     public LinearOpMode getLinearOpMode () throws IllegalAccessException, InstantiationException {

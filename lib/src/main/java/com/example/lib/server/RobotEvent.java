@@ -1,4 +1,4 @@
-package com.example.lib;
+package com.example.lib.server;
 
 public class RobotEvent {
         int eventId;
@@ -7,6 +7,7 @@ public class RobotEvent {
             eventId=action.ordinal();
             eventArgs=args;
         }
+        @Override
         public String toString(){
             String str = "";
             str += eventId + ";";

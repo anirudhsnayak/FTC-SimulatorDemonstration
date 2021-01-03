@@ -1,4 +1,6 @@
-package com.example.lib;
+package com.example.lib.server;
+
+import com.example.lib.robotcore.DeviceMapping;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,9 +8,11 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class RobotServer extends Thread {
     static PrintWriter out;
+    static HashMap<String, RobotEvent> eventTable = new HashMap<String, RobotEvent>();
 
     public void run() {
         try {
@@ -69,9 +73,6 @@ public class RobotServer extends Thread {
                 semiCount++;
             }
         }
-        System.out.println(sensorIdentifier);
-        System.out.println(tag);
-        System.out.println(value);
         switch(sensorIdentifier){
             case "0":
                 DeviceMapping.DSValues.put(tag, value);
@@ -79,7 +80,20 @@ public class RobotServer extends Thread {
         }
     }
     public static void SendCommand (RobotEvent event){
-        System.out.println(event.toString()+ java.lang.System.currentTimeMillis());
-        out.println(event.toString());
+        if (event.eventId == 1) {
+            eventTable.put("undefined", event); //just a placeholder
+            StringBuilder builder = new StringBuilder();
+            String output;
+            for (RobotEvent _event: eventTable.values()) {
+               builder.append(_event.toString()).append(System.lineSeparator());
+            }
+            output = builder.substring(0, Math.max(0, builder.length()-System.lineSeparator().length()));
+            if (!output.equals("")){
+                out.println(output);
+            }
+            eventTable.clear();
+            return;
+        }
+        eventTable.put(event.eventArgs[0], event);
     }
 }
