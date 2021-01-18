@@ -12,6 +12,7 @@ public class RobotController extends Thread{
     public void run(){
         try {
             getLinearOpMode().runOpMode();
+            RobotServer.SendCommand(new RobotEvent(RobotAction.IDLING, new String[]{}));
         } catch (InterruptedException | IllegalAccessException | InstantiationException e) {
             System.out.println(e.toString());
         }

@@ -4,6 +4,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'org.reflections:reflections:0.9.12'
+    implementation 'com.acmerobotics.roadrunner:core:0.5.3'
 }
 
 sourceCompatibility = "1.8"

@@ -25,6 +25,10 @@ public abstract class LinearOpMode { //TODO: MAKE THIS WORK WITH ANNOTATIONS
         Thread.yield();
     }
 
+    public final void waitForStart(){
+        //TODO: ADD DETAILS HERE
+    }
+
     public final boolean opModeIsActive() {
         boolean isActive = !this.isStopRequested() && this.isStarted();
         if (isActive) {

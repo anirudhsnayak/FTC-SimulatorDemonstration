@@ -1,3 +1,4 @@
+/*
 package com.example.lib;
 import com.example.lib.robotcore.*;
 
@@ -15,16 +16,12 @@ public class AutonomousOpMode extends LinearOpMode{
         motorRightFront = hardwareMap.dcMotor.get("Motor2");
         motorLeftBack = hardwareMap.dcMotor.get("Motor3");
         motorRightBack = hardwareMap.dcMotor.get("Motor4");
-        ds1 = hardwareMap.get(DistanceSensor.class, "DS1");
-        ds2 = hardwareMap.get(DistanceSensor.class, "DS2");
-
-        //makeParallel();
-        while (opModeIsActive()) {
-            StrafeRight();
-            sleep(2000);
-            StopMotors();
-            sleep(2000);
-        }
+        //ds1 = hardwareMap.get(DistanceSensor.class, "DS1");
+        //ds2 = hardwareMap.get(DistanceSensor.class, "DS2");
+        sleep(2000);
+        StrafeLeft();
+        sleep(20);
+        //TODO: Implement function at the end of runOpMode to send a event package closer to the simulator
     }
     void SpinClockwise(){
         motorLeftFront.setPower(-200);
@@ -74,7 +71,7 @@ public class AutonomousOpMode extends LinearOpMode{
             double dis2 = ds2.getDistance(DistanceUnit.CM);
             System.out.println(ds1.getDistance(DistanceUnit.CM));
             System.out.println(ds2.getDistance(DistanceUnit.CM));
-            if (Math.abs(dis1-dis2)<5){
+            if (Math.abs(dis1-dis2)<1){
                 StopMotors();
                 break;
             }
@@ -86,3 +83,4 @@ public class AutonomousOpMode extends LinearOpMode{
         }
     }
 }
+ */
