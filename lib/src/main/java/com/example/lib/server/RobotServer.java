@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RobotServer extends Thread {
@@ -53,7 +54,7 @@ public class RobotServer extends Thread {
         int index=-1;
         String sensorIdentifier = "";
         String tag = "";
-        double value = 0;
+        ArrayList<Double> values = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
             if (c == ';'){
@@ -65,8 +66,8 @@ public class RobotServer extends Thread {
                     case 1:
                         tag = substring;
                         break;
-                    case 2:
-                        value = Double.parseDouble(substring);;
+                    default:
+                        values.add(Double.parseDouble(substring));
                         break;
                 }
                 index = i;
@@ -75,13 +76,15 @@ public class RobotServer extends Thread {
         }
         switch(sensorIdentifier){
             case "0":
-                DeviceMapping.DSValues.put(tag, value);
+                DeviceMapping.DSValues.put(tag, values.get(0));
                 break;
+            case "1":
+                DeviceMapping.IMUValues.put(tag, (Double[]) values.toArray());
         }
     }
     public static void SendCommand (RobotEvent event){
         if (event.eventId == 1) {
-            eventTable.put("undefined", event); //just a placeholder
+            eventTable.put("undefined", event); //event package closer
             StringBuilder builder = new StringBuilder();
             String output;
             for (RobotEvent _event: eventTable.values()) {

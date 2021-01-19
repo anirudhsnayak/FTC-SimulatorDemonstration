@@ -12,7 +12,7 @@ public abstract class LinearOpMode { //TODO: MAKE THIS WORK WITH ANNOTATIONS
     abstract public void runOpMode() throws InterruptedException;
 
     protected void sleep(long milliseconds)  {
-        RobotServer.SendCommand(new RobotEvent(RobotAction.IDLING, new String[]{}));
+        CloseEventPackage();
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
@@ -21,7 +21,7 @@ public abstract class LinearOpMode { //TODO: MAKE THIS WORK WITH ANNOTATIONS
         }
     }
     public final void idle() {
-        RobotServer.SendCommand(new RobotEvent(RobotAction.IDLING, new String[]{}));
+        CloseEventPackage();
         Thread.yield();
     }
 
@@ -46,5 +46,7 @@ public abstract class LinearOpMode { //TODO: MAKE THIS WORK WITH ANNOTATIONS
     public final boolean isStopRequested() {
         return this.stopRequested || Thread.currentThread().isInterrupted();
     }
-
+    public static void CloseEventPackage(){ //probably shouldn't be visible to user code
+        RobotServer.SendCommand(new RobotEvent(RobotAction.IDLING, new String[]{}));
+    }
 }
