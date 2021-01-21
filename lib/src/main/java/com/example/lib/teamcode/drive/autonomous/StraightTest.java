@@ -10,9 +10,9 @@ import com.example.lib.teamcode.drive.MecanumDrivetrain;
 /*
  * This is a simple routine to test translational drive capabilities.
  */
-@Autonomous
+
 public class StraightTest extends LinearOpMode {
-    public static double DISTANCE = 600; // in
+    public static double DISTANCE = 60; // in
 
     @Override
     public void runOpMode() throws InterruptedException {

@@ -114,9 +114,12 @@ public class MecanumDrivetrain extends MecanumDrive {
         // BNO055IMUUtil.remapAxes(imu, AxesOrder.XYZ, AxesSigns.NPN);
 
         leftFront = hardwareMap.get(DcMotorEx.class, "Motor1");
-        leftRear = hardwareMap.get(DcMotorEx.class, "Motor3");
+        leftRear = hardwareMap.get(DcMotorEx.class, "Motor2");
         rightRear = hardwareMap.get(DcMotorEx.class, "Motor4");
-        rightFront = hardwareMap.get(DcMotorEx.class, "Motor2");
+        rightFront = hardwareMap.get(DcMotorEx.class, "Motor3");
+
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -202,8 +205,13 @@ public class MecanumDrivetrain extends MecanumDrive {
         Pose2d currentPose = getPoseEstimate();
         Pose2d lastError = getLastError();
 
-        System.out.println("X: "+lastError.getX());
-        System.out.println("Y: "+lastError.getY());
+        System.out.println("Encoder1: "+leftFront.getCurrentPosition());
+        System.out.println("Encoder2: "+leftRear.getCurrentPosition());
+        System.out.println("Encoder3: "+rightFront.getCurrentPosition());
+        System.out.println("Encoder4: "+rightRear.getCurrentPosition());
+        System.out.println("IMU: "+imu.getAngularOrientation().firstAngle);
+        System.out.println("CurrentPoseX: "+currentPose.getX());
+        System.out.println("CurrentPoseY: "+currentPose.getY());
 
         poseHistory.add(currentPose);
 
@@ -212,7 +220,6 @@ public class MecanumDrivetrain extends MecanumDrive {
         }
 
 
-        System.out.println(mode.toString());
         switch (mode) {
             case IDLE:
                 // do nothing
@@ -301,10 +308,10 @@ public class MecanumDrivetrain extends MecanumDrive {
 
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
-        leftFront.setPower(-v); //SINCE THE MOTORS ARE UPSIDE DOWN
+        leftFront.setPower(v);
         leftRear.setPower(v1);
-        rightRear.setPower(v2);//SINCE THE MOTORS ARE UPSIDE DOWN
-        rightFront.setPower(-v3);
+        rightRear.setPower(v2);
+        rightFront.setPower(v3);
         LinearOpMode.CloseEventPackage();
     }
 

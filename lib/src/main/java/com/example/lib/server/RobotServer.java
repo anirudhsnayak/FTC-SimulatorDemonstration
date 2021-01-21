@@ -54,7 +54,7 @@ public class RobotServer extends Thread {
         int index=-1;
         String sensorIdentifier = "";
         String tag = "";
-        ArrayList<Double> values = new ArrayList<>();
+        ArrayList<String> values = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
             if (c == ';'){
@@ -67,7 +67,7 @@ public class RobotServer extends Thread {
                         tag = substring;
                         break;
                     default:
-                        values.add(Double.parseDouble(substring));
+                        values.add(substring);
                         break;
                 }
                 index = i;
@@ -76,10 +76,20 @@ public class RobotServer extends Thread {
         }
         switch(sensorIdentifier){
             case "0":
-                DeviceMapping.DSValues.put(tag, values.get(0));
+                DeviceMapping.DSValues.put(tag, Double.parseDouble(values.get(0)));
                 break;
             case "1":
-                DeviceMapping.IMUValues.put(tag, (Double[]) values.toArray());
+                Double[] doubleValues = new Double[values.size()];
+                int i = 0;
+                for (String value: values) {
+                    doubleValues[i] = Double.parseDouble(value);
+                    i++;
+                }
+                DeviceMapping.IMUValues.put(tag, doubleValues);
+                break;
+            case "2":
+                DeviceMapping.EncoderValues.put(tag, Long.parseLong(values.get(0)));
+                break;
         }
     }
     public static void SendCommand (RobotEvent event){

@@ -25,10 +25,8 @@ public class BNO055IMUImpl implements BNO055IMU {
         if (transform == null){
             return new Orientation();
         }
-        System.out.println("Poggers");
         Orientation angularOrientation = new Orientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES, (float)(double)transform[3], (float)(double)transform[4], (float)(double)transform[5], 0);
-        System.out.println("nice");
-        angularOrientation.toAngleUnit(AngleUnit.RADIANS);
+        angularOrientation = angularOrientation.toAngleUnit(AngleUnit.RADIANS);
         return angularOrientation;
     }
     /**

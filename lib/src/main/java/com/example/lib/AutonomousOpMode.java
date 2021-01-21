@@ -1,4 +1,4 @@
-/*
+
 package com.example.lib;
 import com.example.lib.robotcore.*;
 
@@ -19,7 +19,7 @@ public class AutonomousOpMode extends LinearOpMode{
         //ds1 = hardwareMap.get(DistanceSensor.class, "DS1");
         //ds2 = hardwareMap.get(DistanceSensor.class, "DS2");
         sleep(2000);
-        StrafeLeft();
+        StrafeRight();
         sleep(20);
         //TODO: Implement function at the end of runOpMode to send a event package closer to the simulator
     }
@@ -43,8 +43,8 @@ public class AutonomousOpMode extends LinearOpMode{
     }
     void StrafeRight(){
         motorLeftFront.setPower(-200);
-        motorRightFront.setPower(200);
-        motorLeftBack.setPower(-200);
+        motorRightFront.setPower(0);
+        motorLeftBack.setPower(0);
         motorRightBack.setPower(200);
     }
     void MoveForward(float p){
@@ -83,4 +83,4 @@ public class AutonomousOpMode extends LinearOpMode{
         }
     }
 }
- */
+

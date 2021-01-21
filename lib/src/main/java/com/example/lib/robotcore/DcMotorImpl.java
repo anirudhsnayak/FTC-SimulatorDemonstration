@@ -37,10 +37,13 @@ import com.example.lib.server.RobotServer;
 
 
 public class DcMotorImpl implements DcMotor {
+    final double maxMotorSpeed = 360.0; // Deg/Sec
+
     String Tag;
     ZeroPowerBehavior powerBehavior;
     RunMode mode;
-    Direction direction;
+    Direction direction = Direction.FORWARD;
+    long zeroIndex = 0;
     double Power;
 
     public DcMotorImpl(String tag){
@@ -48,9 +51,15 @@ public class DcMotorImpl implements DcMotor {
     }
     public void setPower(double power){
         Power = power;
-        RobotServer.SendCommand(new RobotEvent(RobotAction.SET_POWER, new String[]{Tag, "100000.0", String.valueOf(power)}));
+        if (direction==Direction.FORWARD) {
+            RobotServer.SendCommand(new RobotEvent(RobotAction.SET_POWER,
+                    new String[]{Tag, "100000.0", String.valueOf(GetSpeed(power))}));
+        }else{
+            RobotServer.SendCommand(new RobotEvent(RobotAction.SET_POWER,
+                    new String[]{Tag, "100000.0", String.valueOf(GetSpeed(-power))}));
+        }
         //RobotController.AddEvent(RobotAction.SET_POWER, new String[]{Tag, "100000.0", String.valueOf(power)});
-        //need to make some implementation that takes in the power as a value [0, 1], based on the value entered in the robot builder
+        //need to make some implementation that takes in the power as a value [-1, 1], based on the value entered in the robot builder
         //but for now the spin force is virtually infinite and the speed is the power
     }
     public void setZeroPowerBehavior(ZeroPowerBehavior zeroPowerBehavior){
@@ -60,11 +69,20 @@ public class DcMotorImpl implements DcMotor {
         return powerBehavior;
     }
     public int getCurrentPosition(){
-        int PLACEHOLDER = 0;
-        return PLACEHOLDER; //ADD AN ENCODER
+        if (!DeviceMapping.EncoderValues.containsKey(Tag)){
+            return 0;
+        }
+        int currentPosition = (int) (DeviceMapping.EncoderValues.get(Tag)-zeroIndex);
+        if (direction==Direction.FORWARD) {
+            return currentPosition;
+        }
+        return -currentPosition;
     }
     public void setMode(RunMode runMode){
         mode = runMode;
+        if (mode == RunMode.STOP_AND_RESET_ENCODER){
+            zeroIndex = DeviceMapping.EncoderValues.get(Tag);
+        }
     }
     public RunMode getMode(){
         return mode;
@@ -77,5 +95,10 @@ public class DcMotorImpl implements DcMotor {
     }
     public double getPower(){
         return Power;
+    }
+
+    //put this in utils if possible
+    double GetSpeed (double power){
+        return Math.max(Math.min(power, 1.0), -1.0) * maxMotorSpeed;
     }
 }
