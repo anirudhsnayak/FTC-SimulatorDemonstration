@@ -10,7 +10,7 @@ import com.example.lib.teamcode.drive.MecanumDrivetrain;
  */
 
 public class StrafeTest extends LinearOpMode {
-    public static double DISTANCE = 60; // in
+    public static double DISTANCE = -60; // in
 
     @Override
     public void runOpMode() throws InterruptedException {

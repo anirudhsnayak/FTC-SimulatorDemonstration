@@ -2,7 +2,6 @@
 package com.example.lib;
 import com.example.lib.robotcore.*;
 
-@Autonomous
 public class AutonomousOpMode extends LinearOpMode{
     DcMotor motorLeftFront;
     DcMotor motorRightFront;
@@ -42,10 +41,10 @@ public class AutonomousOpMode extends LinearOpMode{
         motorRightBack.setPower(-200);
     }
     void StrafeRight(){
-        motorLeftFront.setPower(-200);
+        motorLeftFront.setPower(-300);
         motorRightFront.setPower(0);
         motorLeftBack.setPower(0);
-        motorRightBack.setPower(200);
+        motorRightBack.setPower(300);
     }
     void MoveForward(float p){
         motorLeftFront.setPower(p);

@@ -51,12 +51,19 @@ public class DcMotorImpl implements DcMotor {
     }
     public void setPower(double power){
         Power = power;
+
+        if (power == 0 && powerBehavior == ZeroPowerBehavior.FLOAT){
+            RobotServer.SendCommand(new RobotEvent(RobotAction.SET_POWER,
+                    new String[]{Tag, "0.0", "0.0"}));
+            return;
+        }
+
         if (direction==Direction.FORWARD) {
             RobotServer.SendCommand(new RobotEvent(RobotAction.SET_POWER,
-                    new String[]{Tag, "100000.0", String.valueOf(GetSpeed(power))}));
+                    new String[]{Tag, "1000.0", String.valueOf(GetSpeed(power))}));
         }else{
             RobotServer.SendCommand(new RobotEvent(RobotAction.SET_POWER,
-                    new String[]{Tag, "100000.0", String.valueOf(GetSpeed(-power))}));
+                    new String[]{Tag, "1000.0", String.valueOf(GetSpeed(-power))}));
         }
         //RobotController.AddEvent(RobotAction.SET_POWER, new String[]{Tag, "100000.0", String.valueOf(power)});
         //need to make some implementation that takes in the power as a value [-1, 1], based on the value entered in the robot builder
@@ -96,7 +103,6 @@ public class DcMotorImpl implements DcMotor {
     public double getPower(){
         return Power;
     }
-
     //put this in utils if possible
     double GetSpeed (double power){
         return Math.max(Math.min(power, 1.0), -1.0) * maxMotorSpeed;

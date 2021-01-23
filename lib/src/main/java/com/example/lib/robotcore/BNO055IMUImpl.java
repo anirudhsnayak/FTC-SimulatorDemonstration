@@ -25,7 +25,9 @@ public class BNO055IMUImpl implements BNO055IMU {
         if (transform == null){
             return new Orientation();
         }
-        Orientation angularOrientation = new Orientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES, (float)(double)transform[3], (float)(double)transform[4], (float)(double)transform[5], 0);
+        Orientation angularOrientation = new Orientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES,
+                (float)(double)transform[3], (float)(double)transform[4], (float)(double)transform[5], 0);
+        //Note that the
         angularOrientation = angularOrientation.toAngleUnit(AngleUnit.RADIANS);
         return angularOrientation;
     }

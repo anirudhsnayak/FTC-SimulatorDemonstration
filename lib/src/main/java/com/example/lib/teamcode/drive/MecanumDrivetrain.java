@@ -44,8 +44,8 @@ import static com.example.lib.teamcode.drive.DriveConstants.kV;
  * Simple mecanum drive hardware implementation for REV hardware.
  */
 public class MecanumDrivetrain extends MecanumDrive {
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0);
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(1, 0, 0);
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(1, 0, 0);
 
     public static double LATERAL_MULTIPLIER = 1;
 
@@ -205,13 +205,23 @@ public class MecanumDrivetrain extends MecanumDrive {
         Pose2d currentPose = getPoseEstimate();
         Pose2d lastError = getLastError();
 
+        boolean trackError = false;
+        Pose2d trackedPose;
+        if (trackError){
+            trackedPose = lastError;
+        }else{
+            trackedPose = currentPose;
+        }
+
+
         System.out.println("Encoder1: "+leftFront.getCurrentPosition());
         System.out.println("Encoder2: "+leftRear.getCurrentPosition());
         System.out.println("Encoder3: "+rightFront.getCurrentPosition());
         System.out.println("Encoder4: "+rightRear.getCurrentPosition());
-        System.out.println("IMU: "+imu.getAngularOrientation().firstAngle);
-        System.out.println("CurrentPoseX: "+currentPose.getX());
-        System.out.println("CurrentPoseY: "+currentPose.getY());
+
+        System.out.println("Heading: "+trackedPose.getHeading());
+        System.out.println("CurrentPoseX: "+trackedPose.getX());
+        System.out.println("CurrentPoseY: "+trackedPose.getY());
 
         poseHistory.add(currentPose);
 
@@ -308,6 +318,10 @@ public class MecanumDrivetrain extends MecanumDrive {
 
     @Override
     public void setMotorPowers(double v, double v1, double v2, double v3) {
+        System.out.println("V: "+ v);
+        System.out.println("V2: "+ v1);
+        System.out.println("V3: "+ v2);
+        System.out.println("V4: "+ v3);
         leftFront.setPower(v);
         leftRear.setPower(v1);
         rightRear.setPower(v2);
@@ -317,6 +331,6 @@ public class MecanumDrivetrain extends MecanumDrive {
 
     @Override
     public double getRawExternalHeading() {
-        return imu.getAngularOrientation().firstAngle;
+        return imu.getAngularOrientation().secondAngle;
     }
 }
