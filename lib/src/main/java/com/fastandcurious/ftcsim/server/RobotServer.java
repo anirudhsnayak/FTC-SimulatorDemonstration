@@ -18,7 +18,7 @@ public class RobotServer extends Thread {
     public void run() {
         try {
             ServerSocket serverSocket = new ServerSocket();
-            serverSocket.bind(new InetSocketAddress("127.0.0.1.", 5000));
+            serverSocket.bind(new InetSocketAddress("127.0.0.1.", 29071)); //Using port 29071
             while (true) {
                 System.out.println("Awaiting Connection");
                 Socket clientSocket = serverSocket.accept();
